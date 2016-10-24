@@ -1,27 +1,44 @@
-# Node Scrapper Lyrics
+# Node Scrapper Recipes
 
-This project gets the full lyrics of a song using the data from lyricsnmusic.com and scraping the targeted url to get the full lyrics
+This project gets recipes based on the http://food2fork.com/ API and scraping the targeted urls to get the full recipes
 
-It serve a unique keypoint `/lyric` that accepts 2 parameters:
-- `artist`: artist of the song
-- `track`: name of the song
-
-It also serves an `index.html` at `/` showing the use of this API w/ jQuery AJAX
-
-    https://powerful-inlet-75906.herokuapp.com/
+It serve a unique keypoint `/recipe` that accepts one parameters:
+- `q`: query for the recipe
 
 ## Routes Examples
 
-### Lyric
+### Recipes
 
-    /lyric?artist=bon%20jovi&track=bad%20medicine
+    /recipe
+    /recipe?q=tomate
+    /recipe?q=spaghetti
+
+This JSON serve a array if recipes w/ the form:
+
+    {
+        publisher: "The Pioneer Woman",
+        f2f_url: "http://food2fork.com/view/7fcd69",
+        title: "Chicken Spaghetti",
+        source_url: "http://thepioneerwoman.com/cooking/2007/06/chicken_spaghet/",
+        recipe_id: "7fcd69",
+        image_url: "http://static.food2fork.com/496652595_50b3c3e3b92634.jpg",
+        social_rank: 99.99999999999605,
+        publisher_url: "http://thepioneerwoman.com",
+        url_details: "/recipe/7fcd69"
+    },
+
+The property `url_details` can be used to do another request to get the details of the recipe
+
+    /recipe/7fcd69
+
+
+### Details Recipes
 
 ## Production Examples
 
-    https://rocky-hollows-34313.herokuapp.com/lyric?artist=the+beatles&track=love+me+do
-
-    https://rocky-hollows-34313.herokuapp.com/lyric?artist=bon+jovi&track=livin%27+on+a+prayer
-    
+    https://powerful-inlet-75906.herokuapp.com/recipe
+    https://powerful-inlet-75906.herokuapp.com/recipe?q=tomate
+    https://powerful-inlet-75906.herokuapp.com/recipe/7fcd69
 
 ## Installation
 
