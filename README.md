@@ -31,6 +31,16 @@ The property `url_details` can be used to do another request to get the details 
 
     /recipe/7fcd69
 
+This details `endpoint` is only enabled for the following sources:
+
+- closetcooking.com
+- thepioneerwoman.com
+- www.twopeasandtheirpod.com
+- www.101cookbooks.com
+- whatsgabycooking.com
+- www.mybakingaddiction.com
+- simplyrecipes.com
+- allrecipes.com
 
 ### Details Recipes
 
