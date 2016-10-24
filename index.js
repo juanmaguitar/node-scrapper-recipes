@@ -12,8 +12,6 @@ var app = express();
 var apiKey = process.env.FOOD2FORK_API_KEY;
 var baseUrl = process.env.BASE_URL;
 var port = process.env.PORT;
-var urlMyApiServer = baseUrl + ':' + port;
-var publicFolder = path.join(__dirname, 'public');
 
 var sources = {
 	'closetcooking.com' : '.recipe_post',
@@ -85,7 +83,7 @@ app.get('/recipe', cors(), function( req, res ) {
 				console.log("no errors!!")
 
 				jsonRecipes = jsonRecipes.recipes.map( (recipe, i) => {
-					recipe.url_details = urlMyApiServer + '/recipe/' + recipe.recipe_id;
+					recipe.url_details = '/recipe/' + recipe.recipe_id;
 					console.log (recipe)
 					return recipe;
 				})
