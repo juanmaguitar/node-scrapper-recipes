@@ -13,6 +13,8 @@ var apiKey = process.env.FOOD2FORK_API_KEY;
 var baseUrl = process.env.BASE_URL;
 var port = process.env.PORT;
 
+var publicFolder = path.join(__dirname, 'public');
+
 var sources = {
 	'closetcooking.com' : '.recipe_post',
 	'thepioneerwoman.com' : '.entry-content',
