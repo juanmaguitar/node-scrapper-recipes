@@ -26,6 +26,9 @@ var sources = {
 	'allrecipes.com' : '.directions--section__steps'
 }
 
+var cacheRecipes = {};
+var cacheRecipeDetails = {};
+
 app.get('/recipe/:id', cors(), function( req, res ) {
 
 	var recipeId = req.params.id
@@ -33,35 +36,43 @@ app.get('/recipe/:id', cors(), function( req, res ) {
 	urlApiRecipe = urlApiRecipe.replace('<%API_KEY%>', apiKey );
 	urlApiRecipe = urlApiRecipe + '&rId=' + recipeId;
 
-	console.log (urlApiRecipe);
-	getJSON(urlApiRecipe, function(error, recipeResponse){
+	if (cacheRecipeDetails[urlApiRecipe]) {
+		console.log("response from cacheRecipeDetails: " + urlApiRecipe)
+		res.json( cacheRecipeDetails[urlApiRecipe] );
+	}
+	else {
 
-		var publisher = recipeResponse.recipe.publisher_url;
-		publisher = publisher.split("://")[1]
-		console.log (publisher);
+		getJSON(urlApiRecipe, function(error, recipeResponse){
 
-		if ( Object.keys(sources).includes(publisher) ) {
+			var publisher = recipeResponse.recipe.publisher_url;
+			publisher = publisher.split("://")[1]
+			console.log ('publisher => ' + publisher);
 
-			request(recipeResponse.recipe.source_url, function(error, response, html) {
-				var $ = cheerio.load(html);
+			if ( Object.keys(sources).includes(publisher) ) {
 
-				$(sources[publisher]).filter(function() {
-					var $data = $(this);
-					recipeResponse.recipe.description_text = $data.text();
-					recipeResponse.recipe.description_html = $data.html();
+				request(recipeResponse.recipe.source_url, function(error, response, html) {
+					var $ = cheerio.load(html);
+
+					$(sources[publisher]).filter(function() {
+						var $data = $(this);
+						recipeResponse.recipe.description_text = $data.text();
+						recipeResponse.recipe.description_html = $data.html();
+					});
+					cacheRecipeDetails[urlApiRecipe] = recipeResponse;
+					console.log("response from server: " + urlApiRecipe)
+					res.json(recipeResponse);
+
 				});
 
-				res.json(recipeResponse);
+			}
 
-			});
+			else {
+				res.json({ msg: 'no data'});
+			}
 
-		}
+		})
 
-		else {
-			res.json({ msg: 'no data'});
-		}
-
-	})
+	}
 
 
 })
@@ -77,27 +88,36 @@ app.get('/recipe', cors(), function( req, res ) {
 		url = url + '&q=' + query;
 	}
 
-	getJSON(url, function(error, response){
+	console.log("requesting =>  " + url)
+	if (cacheRecipes[url]) {
+		console.log("response from cacheRecipes: " + url)
+		res.json( cacheRecipes[url] );
+	}
+	else {
 
-		if( !error ) {
+		getJSON(url, function(error, response){
 
-				var jsonRecipes = response;
-				console.log("no errors!!")
+			if( !error ) {
 
-				jsonRecipes = jsonRecipes.recipes.map( (recipe, i) => {
-					recipe.url_details = '/recipe/' + recipe.recipe_id;
-					console.log (recipe)
-					return recipe;
-				})
+					var jsonRecipes = response;
 
-				res.json(jsonRecipes);
+					jsonRecipes = jsonRecipes.recipes.map( (recipe, i) => {
+						recipe.url_details = '/recipe/' + recipe.recipe_id;
+						return recipe;
+					})
 
-		}
-		else {
-			res.json({ "status": "ko", "msg" : "No song found" });
-		}
+					cacheRecipes[url] = jsonRecipes;
+					console.log("response from server: " + url)
+					res.json(jsonRecipes);
 
-	})
+			}
+			else {
+				res.json({ "status": "ko", "msg" : "No song found" });
+			}
+
+		})
+
+	}
 
 })
 
