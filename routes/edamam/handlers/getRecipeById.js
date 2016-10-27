@@ -40,8 +40,8 @@ function getRecipeById( req, res ) {
 
 				$data.find(".adsense_block.adsense_csi").remove()
 				$data.find("script").remove()
-				$data.find("script").remove()
 				$data.find(':contains("Foto y fuente:")').remove()
+				$data.find('.media__img-rev').remove()
 
 				recipeResponse.description_text = $data.text();
 				recipeResponse.description_html = $data.html();
