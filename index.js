@@ -32,7 +32,15 @@ var sourcesFood2Fork = {
 
 
 var sourcesEdamam = {
-	'KiwiLimon' : '.pasos'
+	'KiwiLimon' : '.pasos',
+	'Cookpad Spain': '#steps ol',
+	'Canal Cocina': 'article.cooking div',
+	'Hogarmania': '.ficha',
+	'Que Rica Vida': '.recipePartStepsList',
+	'Recetal Comidas' : '[itemprop="recipeInstructions"]',
+	'Hogar Util': '.ficha',
+	'Hola - Cocina y Recetas': '.robapaginas-blogs + .entry',
+	'Comida Kraft' : '[itemprop="recipeInstructions"]'
 }
 
 var cacheRecipes = {};
