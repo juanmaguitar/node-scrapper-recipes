@@ -83,7 +83,7 @@ This details `endpoint` is only enabled for the following "providers":
 
     https://powerful-inlet-75906.herokuapp.com/edamam/recipes?q=pollo
     https://powerful-inlet-75906.herokuapp.com/edamam/recipes?q=queso
-    https://powerful-inlet-75906.herokuapp.com/food2fork/recipe/7fcd69
+    https://powerful-inlet-75906.herokuapp.com/edamam/recipe/4a4e140bcc87651cd3ad284d1effb78e
 
 
 ## Installation
