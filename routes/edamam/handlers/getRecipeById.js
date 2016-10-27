@@ -18,7 +18,6 @@ var sourcesEdamam = {
 	'Comida Kraft' : '[itemprop="recipeInstructions"]'
 }
 
-
 function getRecipeById( req, res ) {
 
 	var recipeId = req.params.id
@@ -38,6 +37,12 @@ function getRecipeById( req, res ) {
 
 			$(sourcesEdamam[publisher]).filter(function() {
 				var $data = $(this);
+
+				$data.find(".adsense_block.adsense_csi").remove()
+				$data.find("script").remove()
+				$data.find("script").remove()
+				$data.find(':contains("Foto y fuente:")').remove()
+
 				recipeResponse.description_text = $data.text();
 				recipeResponse.description_html = $data.html();
 			});
